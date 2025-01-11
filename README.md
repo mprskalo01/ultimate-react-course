@@ -46,6 +46,7 @@ This repository showcases practical implementations, including:
 ## Development Environment
 - React 19+
 - Next.js 15+
+- TypeScript
 - Redux Toolkit
 - Node.js and NPM
 - Development tools: Webpack, Babel
