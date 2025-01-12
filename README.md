@@ -7,7 +7,7 @@ This repository chronicles my progression from React fundamentals to advanced co
 ## Skills Acquired
 
 ### Core React
-- Understanding React components and JSX
+- Understanding React components and TSX (JSX with TypeScript)
 - State and props management
 - Event handling in React
 - Lifecycle methods and hooks
