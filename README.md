@@ -49,7 +49,7 @@ This repository showcases practical implementations, including:
 - TypeScript
 - Redux Toolkit
 - Node.js and NPM
-- Development tools: Webpack, Babel
+- Development tools: Vite, Webpack, Babel
 - Version control with Git
 
 ## Course Reference
