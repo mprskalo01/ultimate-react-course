@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export function Pizza() {
   interface Pizza {
     name: string;
@@ -52,11 +54,37 @@ export function Pizza() {
     },
   ];
 
+  const arr = pizzaData.map((pizza: Pizza) => {
+    return pizza.name;
+  });
+  console.log(arr);
+
   return (
     <div>
-      <img src="pizzas/spinaci.jpg" alt="Spinaci Pizza" />
-      <h2>{pizzaData[2].name}</h2>
-      <p>{pizzaData[2].ingredients}</p>
+      {pizzaData.map((pizza: Pizza): ReactNode => {
+        const imgSrc = pizza.name.split(' ')[1]
+          ? pizza.name.split(' ')[1]
+          : pizza.name;
+        console.log(imgSrc);
+        return (
+          <div>
+            <img
+              src={`pizzas/${imgSrc.toLowerCase()}.jpg`}
+              alt="Spinaci Pizza"
+            />
+            <h2>{pizza.name}</h2>
+            <p>{pizza.ingredients}</p>
+          </div>
+        );
+      })}
     </div>
   );
+
+  //   return (
+  //     <div>
+  //       <img src="pizzas/spinaci.jpg" alt="Spinaci Pizza" />
+  //       <h2>{pizzaData[2].name}</h2>
+  //       <p>{pizzaData[2].ingredients}</p>
+  //     </div>
+  //   );
 }

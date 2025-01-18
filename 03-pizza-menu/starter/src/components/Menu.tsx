@@ -4,9 +4,6 @@ export function Menu() {
     <div>
       <h2>Our menu:</h2>
       <Pizza />
-      <Pizza />
-      <Pizza />
-      <Pizza />
     </div>
   );
 }
