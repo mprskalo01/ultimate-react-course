@@ -6,7 +6,7 @@ interface Pizza {
   soldOut: boolean;
 }
 
-const pizzaData: Pizza[] = [
+export const pizzaData: Pizza[] = [
   {
     name: 'Focaccia',
     ingredients: 'Bread with italian olive oil and rosemary',
@@ -50,4 +50,3 @@ const pizzaData: Pizza[] = [
     soldOut: false,
   },
 ];
-
