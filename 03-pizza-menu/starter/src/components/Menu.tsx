@@ -44,14 +44,21 @@ export function Menu() {
       soldOut: false,
     },
   ];
+
+  const isTherePizzas = pizzaData.length > 0;
   return (
     <main className="menu">
       <h2 className="pizzas">Our menu:</h2>
-      <ul className="pizzas">
-        {pizzaData.map((pizza: PizzaInterface) => (
-          <Pizza key={pizza.name} pizza={pizza} />
-        ))}
-      </ul>
+
+      {isTherePizzas ? (
+        <ul className="pizzas">
+          {pizzaData.map((pizza: PizzaInterface) => (
+            <Pizza key={pizza.name} pizza={pizza} />
+          ))}
+        </ul>
+      ) : (
+        <p>We're still working on our menu. Please come back later {':)'}</p>
+      )}
     </main>
   );
 }

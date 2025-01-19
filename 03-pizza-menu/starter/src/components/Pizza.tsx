@@ -11,6 +11,8 @@ interface Props {
 }
 
 export function Pizza(props: Props) {
+  if (props.pizza.soldOut) return null;
+
   return (
     <li className="pizza">
       <img src={props.pizza.photoName} alt={props.pizza.name} />
