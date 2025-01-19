@@ -6,15 +6,19 @@ export interface PizzaInterface {
   soldOut: boolean;
 }
 
-export function Pizza(props: PizzaInterface) {
+interface Props {
+  pizza: PizzaInterface;
+}
+
+export function Pizza(props: Props) {
   return (
-    <div className="pizza">
-      <img src={props.photoName} alt={props.name} />
+    <li className="pizza">
+      <img src={props.pizza.photoName} alt={props.pizza.name} />
       <div>
-        <h3>{props.name}</h3>
-        <p>{props.ingredients}</p>
-        <span>{+props.price} €</span>
+        <h3>{props.pizza.name}</h3>
+        <p>{props.pizza.ingredients}</p>
+        <span>{+props.pizza.price} €</span>
       </div>
-    </div>
+    </li>
   );
 }

@@ -47,18 +47,11 @@ export function Menu() {
   return (
     <main className="menu">
       <h2 className="pizzas">Our menu:</h2>
-      {pizzaData.map((pizza: PizzaInterface, key) => {
-        return (
-          <Pizza
-            key={key}
-            name={pizza.name}
-            ingredients={pizza.ingredients}
-            price={pizza.price}
-            photoName={pizza.photoName}
-            soldOut={pizza.soldOut}
-          />
-        );
-      })}
+      <ul className="pizzas">
+        {pizzaData.map((pizza: PizzaInterface) => (
+          <Pizza key={pizza.name} pizza={pizza} />
+        ))}
+      </ul>
     </main>
   );
 }
