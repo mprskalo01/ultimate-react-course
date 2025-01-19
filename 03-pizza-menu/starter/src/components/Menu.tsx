@@ -51,11 +51,17 @@ export function Menu() {
       <h2 className="pizzas">Our menu:</h2>
 
       {isTherePizzas ? (
-        <ul className="pizzas">
-          {pizzaData.map((pizza: PizzaInterface) => (
-            <Pizza key={pizza.name} pizza={pizza} />
-          ))}
-        </ul>
+        <>
+          <p>
+            Authentic Italian cuisine. 6 creative dishes to choose from. All
+            from our stone oven, all organic, all delicious.
+          </p>
+          <ul className="pizzas">
+            {pizzaData.map((pizza: PizzaInterface) => (
+              <Pizza key={pizza.name} pizza={pizza} />
+            ))}
+          </ul>
+        </>
       ) : (
         <p>We're still working on our menu. Please come back later {':)'}</p>
       )}

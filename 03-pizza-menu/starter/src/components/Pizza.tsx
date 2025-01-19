@@ -6,20 +6,14 @@ export interface PizzaInterface {
   soldOut: boolean;
 }
 
-interface Props {
-  pizza: PizzaInterface;
-}
-
-export function Pizza(props: Props) {
-  if (props.pizza.soldOut) return null;
-
+export function Pizza({ pizza }: { pizza: PizzaInterface }) {
   return (
-    <li className="pizza">
-      <img src={props.pizza.photoName} alt={props.pizza.name} />
+    <li className={`pizza ${pizza.soldOut ? 'sold-out' : ''}`}>
+      <img src={pizza.photoName} alt={pizza.name} />
       <div>
-        <h3>{props.pizza.name}</h3>
-        <p>{props.pizza.ingredients}</p>
-        <span>{+props.pizza.price} €</span>
+        <h3>{pizza.name}</h3>
+        <p>{pizza.ingredients}</p>
+        <span>{pizza.soldOut ? 'SOLD OUT' : pizza.price + '€'}</span>
       </div>
     </li>
   );
