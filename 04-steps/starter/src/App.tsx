@@ -7,6 +7,7 @@ const messages = [
 ];
 function App() {
   const [step, setStep] = useState(1);
+  const [isOpen, setIsOpen] = useState(true);
   const isActiveClass = (number: number) => {
     return `${step >= number ? 'active' : ''}`;
   };
@@ -19,31 +20,36 @@ function App() {
   };
 
   return (
-    <>
-      <div className="steps">
-        <div className="numbers">
-          <div className={isActiveClass(1)}>1</div>
-          <div className={isActiveClass(2)}>2</div>
-          <div className={isActiveClass(3)}>3</div>
-        </div>
-        <p className="message">{messages[step - 1]}</p>
+    <div>
+      <button className="close" onClick={(): void => setIsOpen(!isOpen)}>
+        &times;
+      </button>
+      {isOpen && (
+        <div className="steps">
+          <div className="numbers">
+            <div className={isActiveClass(1)}>1</div>
+            <div className={isActiveClass(2)}>2</div>
+            <div className={isActiveClass(3)}>3</div>
+          </div>
+          <p className="message">{messages[step - 1]}</p>
 
-        <div className="buttons">
-          <button
-            onClick={handlePrevious}
-            style={{ backgroundColor: '#7950f2', color: '#fff' }}
-          >
-            Previous
-          </button>
-          <button
-            onClick={handleNext}
-            style={{ backgroundColor: '#7950f2', color: '#fff' }}
-          >
-            Next
-          </button>
+          <div className="buttons">
+            <button
+              onClick={handlePrevious}
+              style={{ backgroundColor: '#7950f2', color: '#fff' }}
+            >
+              Previous
+            </button>
+            <button
+              onClick={handleNext}
+              style={{ backgroundColor: '#7950f2', color: '#fff' }}
+            >
+              Next
+            </button>
+          </div>
         </div>
-      </div>
-    </>
+      )}
+    </div>
   );
 }
 
