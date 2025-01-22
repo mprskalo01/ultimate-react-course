@@ -1,13 +1,18 @@
 interface Props {
   skillName: string;
   color: string;
+  level: string;
 }
 
-export function Skill(props: Props) {
+export function Skill({ skillName, color, level }: Props) {
   return (
-    <div className="skill" style={{ backgroundColor: props.color }}>
-      <span>{props.skillName}</span>
-      <span>💪</span>
+    <div className="skill" style={{ backgroundColor: color }}>
+      <span>{skillName}</span>
+      <span>
+        {level === 'beginner' && '👶'}
+        {level === 'intermediate' && '👍'}
+        {level === 'advanced' && '💪'}
+      </span>
     </div>
   );
 }
