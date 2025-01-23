@@ -7,15 +7,16 @@ export interface ItemInterface {
 
 interface Props {
   item: ItemInterface;
+  onDeleteItem: (item: number) => void;
 }
 
-export function Item({ item }: Props) {
+export function Item({ item, onDeleteItem }: Props) {
   return (
     <li>
       <span style={item.packed ? { textDecoration: 'line-through' } : {}}>
         {item.quantity} {item.description}
       </span>
-      <button>❌</button>
+      <button onClick={() => onDeleteItem(item.id)}>❌</button>
     </li>
   );
 }
