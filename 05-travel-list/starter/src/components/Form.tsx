@@ -1,20 +1,25 @@
 import { useState } from 'react';
 import { ItemInterface } from './Item';
 
-export function Form() {
-  const [description, setDescription] = useState('');
-  const [quantity, setQuantity] = useState(1);
+interface Props {
+  onAddItems: (item: ItemInterface) => void;
+}
+
+export function Form({ onAddItems }: Props) {
+  const [description, setDescription] = useState<string>('');
+  const [quantity, setQuantity] = useState<number>(1);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!description) return;
-    const newItem: Partial<ItemInterface> = {
+    const newItem: ItemInterface = {
       description,
       quantity,
       packed: false,
       id: Date.now(),
     };
     console.log(newItem);
+    onAddItems(newItem);
     setDescription('');
     setQuantity(1);
   }
