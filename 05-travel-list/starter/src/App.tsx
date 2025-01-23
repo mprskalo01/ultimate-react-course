@@ -7,6 +7,7 @@ import { useState } from 'react';
 
 function App() {
   const [items, setItems] = useState<ItemInterface[]>([]);
+
   function handleAddItems(item: ItemInterface) {
     setItems((items) => [...items, item]);
   }
@@ -30,7 +31,7 @@ function App() {
         onDeleteItem={handleDeleteItem}
         onToggleItem={handleToggleItem}
       />
-      <Stats />
+      <Stats items={items} />
     </div>
   );
 }
