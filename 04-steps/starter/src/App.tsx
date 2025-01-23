@@ -1,5 +1,5 @@
 import './App.css';
-import Step from './Step';
+import Step from './components/Step';
 
 export function App() {
   return (
