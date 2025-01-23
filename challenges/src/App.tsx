@@ -1,10 +1,12 @@
 import './App.css';
-import ProfileCard from './components/ProfileCard/ProfileCard';
+// import DateCounter from './components/DateCounter/DateCounter';
+// import ProfileCard from './components/ProfileCard/ProfileCard';
 
 function App() {
   return (
     <>
-      <ProfileCard />
+      {/* <ProfileCard /> */}
+      {/* <DateCounter /> */}
     </>
   );
 }
