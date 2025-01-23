@@ -18,7 +18,6 @@ export function Form({ onAddItems }: Props) {
       packed: false,
       id: Date.now(),
     };
-    console.log(newItem);
     onAddItems(newItem);
     setDescription('');
     setQuantity(1);
