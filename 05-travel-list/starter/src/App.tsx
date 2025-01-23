@@ -22,6 +22,10 @@ function App() {
       )
     );
   }
+
+  function handleClearList() {
+    setItems([]);
+  }
   return (
     <div className="app">
       <Logo />
@@ -30,6 +34,7 @@ function App() {
         items={items}
         onDeleteItem={handleDeleteItem}
         onToggleItem={handleToggleItem}
+        onClearList={handleClearList}
       />
       <Stats items={items} />
     </div>

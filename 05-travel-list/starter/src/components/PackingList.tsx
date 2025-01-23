@@ -5,9 +5,15 @@ interface Props {
   items: ItemInterface[];
   onDeleteItem: (item: number) => void;
   onToggleItem: (item: number) => void;
+  onClearList: () => void;
 }
 
-export function PackingList({ items, onDeleteItem, onToggleItem }: Props) {
+export function PackingList({
+  items,
+  onDeleteItem,
+  onToggleItem,
+  onClearList,
+}: Props) {
   const [sortBy, setSortBy] = useState<string>('input');
 
   let sortedItems = items;
@@ -42,6 +48,7 @@ export function PackingList({ items, onDeleteItem, onToggleItem }: Props) {
           <option value="description">Sort by description </option>
           <option value="packed">Sort by packed status</option>
         </select>
+        <button onClick={onClearList}>Clear list</button>
       </div>
     </div>
   );
