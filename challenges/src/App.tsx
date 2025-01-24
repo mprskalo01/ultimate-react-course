@@ -1,8 +1,9 @@
 import './App.css';
-import AccordionList from './components/Accordion/AccordionList';
+// import AccordionList from './components/Accordion/AccordionList';
 // import FlashCardList from './components/FlashCards/FlashCardList';
 // import DateCounter from './components/DateCounter/DateCounter';
 // import ProfileCard from './components/ProfileCard/ProfileCard';
+import TipCalculator from './components/TipCalculator/TipCalculator';
 
 function App() {
   return (
@@ -10,7 +11,8 @@ function App() {
       {/* <ProfileCard /> */}
       {/* <DateCounter /> */}
       {/* <FlashCardList /> */}
-      <AccordionList />
+      {/* <AccordionList /> */}
+      <TipCalculator />
     </>
   );
 }
