@@ -8,11 +8,18 @@ export interface Friend {
 
 interface Props {
   friend: Friend;
+  selectedFriend: Friend | null;
+  onSelection: (friend: Friend) => void;
 }
 
-export default function FriendCard({ friend }: Props) {
+export default function FriendCard({
+  friend,
+  selectedFriend,
+  onSelection,
+}: Props) {
+  const isSelected = selectedFriend?.id === friend.id;
   return (
-    <li>
+    <li className={isSelected ? 'selected' : ''}>
       <img src={friend.image} alt={`My friend ${friend.name}`} />
       <h3>{friend.name}</h3>
       {friend.balance === 0 && <p>You and {friend.name} are even</p>}
@@ -26,7 +33,9 @@ export default function FriendCard({ friend }: Props) {
           {friend.name} owes you {friend.balance}€
         </p>
       )}
-      <Button>Select</Button>
+      <Button onClick={() => onSelection(friend)}>
+        {isSelected ? 'Close' : 'Select'}
+      </Button>
     </li>
   );
 }

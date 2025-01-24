@@ -1,30 +1,21 @@
 import FriendCard, { Friend } from './FriendCard';
 
-const FriendList = () => {
-  const initialFriends: Friend[] = [
-    {
-      id: 118836,
-      name: 'Clark',
-      image: 'https://i.pravatar.cc/48?u=118836',
-      balance: -7,
-    },
-    {
-      id: 933372,
-      name: 'Sarah',
-      image: 'https://i.pravatar.cc/48?u=933372',
-      balance: 20,
-    },
-    {
-      id: 499476,
-      name: 'Anthony',
-      image: 'https://i.pravatar.cc/48?u=499476',
-      balance: 0,
-    },
-  ];
+interface Props {
+  friends: Friend[];
+  selectedFriend: Friend | null;
+  onSelection: (friend: Friend) => void;
+}
+
+const FriendList = ({ friends, selectedFriend, onSelection }: Props) => {
   return (
     <ul>
-      {initialFriends.map((friend) => (
-        <FriendCard friend={friend} key={friend.id} />
+      {friends.map((friend) => (
+        <FriendCard
+          friend={friend}
+          key={friend.id}
+          selectedFriend={selectedFriend}
+          onSelection={onSelection}
+        />
       ))}
     </ul>
   );
