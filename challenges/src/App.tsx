@@ -1,14 +1,16 @@
 import './App.css';
+import AccordionList from './components/Accordion/AccordionList';
 // import FlashCardList from './components/FlashCards/FlashCardList';
-import DateCounter from './components/DateCounter/DateCounter';
+// import DateCounter from './components/DateCounter/DateCounter';
 // import ProfileCard from './components/ProfileCard/ProfileCard';
 
 function App() {
   return (
     <>
       {/* <ProfileCard /> */}
-      <DateCounter />
+      {/* <DateCounter /> */}
       {/* <FlashCardList /> */}
+      <AccordionList />
     </>
   );
 }
