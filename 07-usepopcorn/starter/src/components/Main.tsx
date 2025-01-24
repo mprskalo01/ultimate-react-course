@@ -1,16 +1,13 @@
-import { Movie } from './MovieCard';
-import SearchResultsBox from './SearchResultsBox/SearchResultsBox';
-import WatchedBox from './WatchedBox/WatchedBox';
 
 interface Props {
-  movies: Movie[];
+  children: React.ReactNode;
+  // movies: Movie[];
 }
 
-const Main = ({ movies }: Props) => {
+const Main = ({ children }: Props) => {
   return (
     <main className="main">
-      <SearchResultsBox movies={movies} />
-      <WatchedBox />
+      {children}
     </main>
   );
 };

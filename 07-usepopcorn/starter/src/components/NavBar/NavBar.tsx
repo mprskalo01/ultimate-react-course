@@ -1,17 +1,13 @@
 import Logo from './Logo';
-import Search from './Search';
-import NumberOfResults from './NumberOfResults';
-import { Movie } from '../MovieCard';
 
 interface Props {
-  movies: Movie[];
+  children: React.ReactNode;
 }
-const NavBar = ({ movies }: Props) => {
+const NavBar = ({ children }: Props) => {
   return (
     <nav className="nav-bar">
       <Logo />
-      <Search />
-      <NumberOfResults movies={movies} />
+      {children}
     </nav>
   );
 };

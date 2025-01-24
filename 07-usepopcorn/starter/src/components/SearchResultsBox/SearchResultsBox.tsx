@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { Movie } from '../MovieCard';
-import MovieList from '../MovieList';
 
 interface Props {
-  movies: Movie[];
+  children: React.ReactNode;
+  // movies: Movie[];
 }
 
-const SearchResultsBox = ({ movies }: Props) => {
+const SearchResultsBox = ({ children }: Props) => {
   const [isOpen1, setIsOpen1] = useState(true);
   return (
     <div className="box">
@@ -16,7 +15,7 @@ const SearchResultsBox = ({ movies }: Props) => {
       >
         {isOpen1 ? '–' : '+'}
       </button>
-      {isOpen1 && <MovieList movies={movies} />}
+      {isOpen1 && children}
     </div>
   );
 };

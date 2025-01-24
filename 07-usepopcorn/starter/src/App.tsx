@@ -2,6 +2,11 @@ import { useState } from 'react';
 import Main from './components/Main';
 import NavBar from './components/NavBar/NavBar';
 import { Movie } from './components/MovieCard';
+import NumberOfResults from './components/NavBar/NumberOfResults';
+import SearchResultsBox from './components/SearchResultsBox/SearchResultsBox';
+import WatchedBox from './components/WatchedBox/WatchedBox';
+import MovieList from './components/MovieList';
+import Search from './components/NavBar/Search';
 const tempMovieData: Movie[] = [
   {
     imdbID: 'tt1375666',
@@ -30,8 +35,16 @@ function App() {
   const [movies, setMovies] = useState(tempMovieData);
   return (
     <>
-      <NavBar movies={movies} />
-      <Main movies={movies} />
+      <NavBar>
+        <Search />
+        <NumberOfResults movies={movies} />
+      </NavBar>
+      <Main>
+        <SearchResultsBox>
+          <MovieList movies={movies} />
+        </SearchResultsBox>
+        <WatchedBox />
+      </Main>
     </>
   );
 }
