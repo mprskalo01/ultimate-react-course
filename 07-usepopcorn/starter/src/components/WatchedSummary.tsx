@@ -1,4 +1,4 @@
-import { Movie } from '../MovieCard';
+import { Movie } from './MovieCard';
 
 interface Props {
   movies: Movie[];
