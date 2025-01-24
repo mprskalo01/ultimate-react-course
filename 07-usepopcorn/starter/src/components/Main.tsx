@@ -1,10 +1,10 @@
-import ListBox from './SearchResultsBox/SearchResultsBox';
+import SearchResultsBox from './SearchResultsBox/SearchResultsBox';
 import WatchedBox from './WatchedBox/WatchedBox';
 
 const Main = () => {
   return (
     <main className="main">
-      <ListBox />
+      <SearchResultsBox />
       <WatchedBox />
     </main>
   );

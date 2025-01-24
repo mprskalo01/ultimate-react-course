@@ -28,7 +28,6 @@ const tempWatchedData = [
 const WatchedBox = () => {
   const [watched, setWatched] = useState(tempWatchedData);
   const [isOpen2, setIsOpen2] = useState(true);
-  setWatched(tempWatchedData);
   return (
     <div className="box">
       <button

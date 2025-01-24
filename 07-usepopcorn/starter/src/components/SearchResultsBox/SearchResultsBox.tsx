@@ -27,7 +27,6 @@ const tempMovieData: Movie[] = [
 ];
 const SearchResultsBox = () => {
   const [movies, setMovies] = useState(tempMovieData);
-  setMovies(tempMovieData);
   const [isOpen1, setIsOpen1] = useState(true);
   return (
     <div className="box">
