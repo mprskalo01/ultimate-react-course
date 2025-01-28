@@ -2,8 +2,6 @@
 
 React relies on **components**, **elements**, and **instances** to build UIs. Here's a quick overview with examples:
 
----
-
 ## 1. **React Components**
 
 A **component** is a reusable function or class that returns React elements (UI).
@@ -19,8 +17,6 @@ function Greeting({ name }: { name: string }) {
 <Greeting name="John" />;
 ```
 
----
-
 ## 2. **React Elements**
 
 A **React Element** is a lightweight, immutable JavaScript object describing **what** to render.
@@ -32,8 +28,6 @@ const element = <h1>Welcome!</h1>;
 console.log(element);
 // Output: { type: "h1", props: { children: "Welcome!" } }
 ```
-
----
 
 ## 3. **React Instances**
 
@@ -53,16 +47,12 @@ class Greeting extends React.Component<{ name: string }> {
 <Greeting name="John" />; // Instance created internally
 ```
 
----
-
 ## Key Differences
 
 | **Aspect**     | **Component**  | **Element**              | **Instance**                  |
 | -------------- | -------------- | ------------------------ | ----------------------------- |
 | **Definition** | Function/class | Immutable UI description | Rendered component            |
 | **Usage**      | `<Greeting />` | `<h1>Hello!</h1>`        | Managed by React (class only) |
-
----
 
 ## Summary
 
@@ -236,3 +226,229 @@ Understanding the render phase helps developers write more efficient React appli
 - Better understanding how to debug performance issues
 
 This knowledge is particularly valuable when optimizing React applications or implementing advanced patterns like render props or higher-order components.
+
+---
+
+# Understanding React's Commit Phase
+
+The commit phase is the second and final phase of React's rendering process, where the calculated changes are actually applied to the DOM. Let's explore this crucial phase in detail.
+
+## Core Concept
+
+While the render phase calculates what changes are needed, the commit phase is where React takes those calculations and actually applies them to the DOM. This phase is synchronous and uninterruptible to ensure UI consistency.
+
+## Key Steps in the Commit Phase
+
+### 1. Pre-commit
+
+Before making any DOM changes, React:
+
+*Captures Current State*:
+```javascript
+// React maintains references to current DOM nodes
+const currentDOM = fiber.stateNode;
+const parentDOM = fiber.return.stateNode;
+```
+
+*Prepares Layout Effects*:
+```javascript
+// Cleans up previous layout effects
+if (current !== null) {
+  const prevEffect = current.effectTag;
+  if (prevEffect & LayoutEffect) {
+    // Clean up previous layout effects
+  }
+}
+```
+
+### 2. DOM Mutations
+
+React processes the effect list created during the render phase, applying changes in this order:
+
+```javascript
+// Pseudo-code of effect processing
+function commitRoot(root) {
+  // 1. Handle deletions first
+  commitDeletion(deletion)
+  
+  // 2. Handle placements (insertions)
+  commitPlacement(placement)
+  
+  // 3. Handle updates
+  commitWork(update)
+}
+```
+
+*Types of Mutations*:
+
+1. *Host Component Updates*:
+```javascript
+// Direct DOM manipulation
+node.setAttribute('class', 'new-class')
+node.style.color = 'blue'
+node.textContent = 'Updated text'
+```
+
+2. *Component Mounting*:
+```javascript
+// Creating new DOM nodes
+const newNode = document.createElement('div')
+parent.appendChild(newNode)
+```
+
+3. *Component Unmounting*:
+```javascript
+// Removing DOM nodes
+parent.removeChild(node)
+```
+
+### 3. Lifecycle Methods and Hooks
+
+React executes various lifecycle methods and hooks in a specific order:
+
+*Class Components*:
+```javascript
+class Component extends React.Component {
+  componentDidMount() {
+    // Called after DOM mutations
+  }
+  
+  componentDidUpdate(prevProps, prevState) {
+    // Called after update mutations
+  }
+  
+  componentWillUnmount() {
+    // Called before removal
+  }
+}
+```
+
+*Function Components*:
+```javascript
+function Component() {
+  // Layout Effects run synchronously after mutations
+  useLayoutEffect(() => {
+    // DOM measurements and mutations
+    return () => {
+      // Cleanup
+    };
+  });
+  
+  // Effects run asynchronously after render
+  useEffect(() => {
+    // Side effects
+    return () => {
+      // Cleanup
+    };
+  });
+}
+```
+
+### 4. Effect Execution
+
+React handles effects in two phases:
+
+*Layout Effects*:
+- Run synchronously immediately after DOM mutations
+- Used for DOM measurements and synchronous DOM mutations
+
+*Passive Effects*:
+- Run asynchronously after the commit completes
+- Used for side effects like data fetching, subscriptions
+
+```javascript
+// Execution order
+commitRoot() {
+  // 1. DOM Mutations
+  commitMutationEffects();
+  
+  // 2. Layout Effects
+  commitLayoutEffects();
+  
+  // 3. Schedule Passive Effects
+  schedulePassiveEffects();
+}
+```
+
+## Important Characteristics
+
+### 1. Synchronous Nature
+
+```javascript
+// The commit phase runs synchronously to maintain UI consistency
+function commitRoot(root) {
+  // Cannot be interrupted once started
+  flushSync(() => {
+    commitRootImpl(root);
+  });
+}
+```
+
+### 2. Guaranteed DOM Updates
+
+Unlike the render phase, every commit phase results in actual DOM updates:
+
+```javascript
+// Each of these will trigger a commit
+setState(newState);        // State updates
+forceUpdate();            // Force re-renders
+ReactDOM.render(element); // Initial renders
+```
+
+### 3. Performance Implications
+
+The commit phase impacts performance because:
+
+- It runs on the main thread
+- Cannot be interrupted
+- Directly manipulates the DOM
+
+Best practices include:
+
+```javascript
+// Minimize DOM mutations
+const Component = memo(({ text }) => {
+  return <div>{text}</div>;
+});
+
+// Use transitions for non-urgent updates
+startTransition(() => {
+  setCount(c => c + 1);
+});
+```
+
+## Developer Considerations
+
+1. Keep commit phase work minimal by:
+   - Avoiding heavy computations in lifecycle methods
+   - Using `useLayoutEffect` sparingly
+   - Minimizing DOM manipulations
+
+2. Handle measurements and mutations appropriately:
+```javascript
+// Use useLayoutEffect for DOM measurements
+useLayoutEffect(() => {
+  const measurements = element.getBoundingClientRect();
+  // Update DOM based on measurements
+}, []);
+```
+
+3. Properly cleanup effects:
+```javascript
+useEffect(() => {
+  const subscription = subscribe();
+  return () => {
+    // Cleanup before next commit
+    subscription.unsubscribe();
+  };
+}, []);
+```
+
+Understanding the commit phase is crucial for:
+- Debugging rendering issues
+- Optimizing performance
+- Managing side effects appropriately
+- Implementing complex animations
+- Handling DOM measurements correctly
+
+This knowledge helps developers create more performant and predictable React applications.
