@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Main from './components/Main';
 import NavBar from './components/NavBar/NavBar';
 import NumberOfResults from './components/NavBar/NumberOfResults';
@@ -7,6 +7,7 @@ import MovieList from './components/MovieList';
 import Search from './components/NavBar/Search';
 import Box from './components/Box';
 import WatchedSummary from './components/WatchedSummary';
+const API_KEY = import.meta.env.VITE_API_KEY;
 
 const tempMovieData: Movie[] = [
   {
@@ -58,6 +59,12 @@ const tempWatchedData: Movie[] = [
 function App() {
   const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
+
+  useEffect(function () {
+    fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=dune`)
+      .then((res) => res.json())
+      .then((data) => setMovies(data.Search));
+  }, []);
 
   return (
     <>
