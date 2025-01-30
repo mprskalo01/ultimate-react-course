@@ -7,31 +7,9 @@ import MovieList from './components/MovieList';
 import Search from './components/NavBar/Search';
 import Box from './components/Box';
 import WatchedSummary from './components/WatchedSummary';
+import Loader from './components/Loader';
+import ErrorMessage from './components/ErrorMessage';
 const API_KEY = import.meta.env.VITE_API_KEY;
-
-const tempMovieData: Movie[] = [
-  {
-    imdbID: 'tt1375666',
-    Title: 'Inception',
-    Year: '2010',
-    Poster:
-      'https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg',
-  },
-  {
-    imdbID: 'tt0133093',
-    Title: 'The Matrix',
-    Year: '1999',
-    Poster:
-      'https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg',
-  },
-  {
-    imdbID: 'tt6751668',
-    Title: 'Parasite',
-    Year: '2019',
-    Poster:
-      'https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg',
-  },
-];
 
 const tempWatchedData: Movie[] = [
   {
@@ -57,13 +35,37 @@ const tempWatchedData: Movie[] = [
 ];
 
 function App() {
-  const [movies, setMovies] = useState(tempMovieData);
+  const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState(tempWatchedData);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const searchQuery = 'asdasdasdas';
 
   useEffect(function () {
-    fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=dune`)
-      .then((res) => res.json())
-      .then((data) => setMovies(data.Search));
+    async function FetchMovies() {
+      try {
+        setIsLoading(true);
+        const res = await fetch(
+          `http://www.omdbapi.com/?apikey=${API_KEY}&s=${searchQuery}`
+        );
+        // if (!res.ok)
+        //   throw new Error('Something went wrong with fetching movies.');
+
+        const data = await res.json();
+        if (data.Response === 'False') throw new Error('No movies found');
+
+        setMovies(data.Search);
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError('An unknown error occured');
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    FetchMovies();
   }, []);
 
   return (
@@ -74,8 +76,19 @@ function App() {
       </NavBar>
       <Main>
         <Box>
-          <MovieList movies={movies} />
+          {isLoading ? (
+            <Loader />
+          ) : error ? (
+            <ErrorMessage message={error} />
+          ) : (
+            <MovieList movies={movies} />
+          )}
         </Box>
+        {/* <Box>
+          {isLoading && <Loader />}
+          {!isLoading && !error && <MovieList movies={movies} />}
+          {error && <ErrorMessage message={error} />}
+        </Box> */}
         <Box>
           <WatchedSummary movies={watched} />
           <MovieList movies={watched} />
