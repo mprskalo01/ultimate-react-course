@@ -243,14 +243,16 @@ While the render phase calculates what changes are needed, the commit phase is w
 
 Before making any DOM changes, React:
 
-*Captures Current State*:
+_Captures Current State_:
+
 ```javascript
 // React maintains references to current DOM nodes
 const currentDOM = fiber.stateNode;
 const parentDOM = fiber.return.stateNode;
 ```
 
-*Prepares Layout Effects*:
+_Prepares Layout Effects_:
+
 ```javascript
 // Cleans up previous layout effects
 if (current !== null) {
@@ -269,61 +271,66 @@ React processes the effect list created during the render phase, applying change
 // Pseudo-code of effect processing
 function commitRoot(root) {
   // 1. Handle deletions first
-  commitDeletion(deletion)
-  
+  commitDeletion(deletion);
+
   // 2. Handle placements (insertions)
-  commitPlacement(placement)
-  
+  commitPlacement(placement);
+
   // 3. Handle updates
-  commitWork(update)
+  commitWork(update);
 }
 ```
 
-*Types of Mutations*:
+_Types of Mutations_:
 
-1. *Host Component Updates*:
+1. _Host Component Updates_:
+
 ```javascript
 // Direct DOM manipulation
-node.setAttribute('class', 'new-class')
-node.style.color = 'blue'
-node.textContent = 'Updated text'
+node.setAttribute('class', 'new-class');
+node.style.color = 'blue';
+node.textContent = 'Updated text';
 ```
 
-2. *Component Mounting*:
+2. _Component Mounting_:
+
 ```javascript
 // Creating new DOM nodes
-const newNode = document.createElement('div')
-parent.appendChild(newNode)
+const newNode = document.createElement('div');
+parent.appendChild(newNode);
 ```
 
-3. *Component Unmounting*:
+3. _Component Unmounting_:
+
 ```javascript
 // Removing DOM nodes
-parent.removeChild(node)
+parent.removeChild(node);
 ```
 
 ### 3. Lifecycle Methods and Hooks
 
 React executes various lifecycle methods and hooks in a specific order:
 
-*Class Components*:
+_Class Components_:
+
 ```javascript
 class Component extends React.Component {
   componentDidMount() {
     // Called after DOM mutations
   }
-  
+
   componentDidUpdate(prevProps, prevState) {
     // Called after update mutations
   }
-  
+
   componentWillUnmount() {
     // Called before removal
   }
 }
 ```
 
-*Function Components*:
+_Function Components_:
+
 ```javascript
 function Component() {
   // Layout Effects run synchronously after mutations
@@ -333,7 +340,7 @@ function Component() {
       // Cleanup
     };
   });
-  
+
   // Effects run asynchronously after render
   useEffect(() => {
     // Side effects
@@ -348,11 +355,13 @@ function Component() {
 
 React handles effects in two phases:
 
-*Layout Effects*:
+_Layout Effects_:
+
 - Run synchronously immediately after DOM mutations
 - Used for DOM measurements and synchronous DOM mutations
 
-*Passive Effects*:
+_Passive Effects_:
+
 - Run asynchronously after the commit completes
 - Used for side effects like data fetching, subscriptions
 
@@ -361,10 +370,10 @@ React handles effects in two phases:
 commitRoot() {
   // 1. DOM Mutations
   commitMutationEffects();
-  
+
   // 2. Layout Effects
   commitLayoutEffects();
-  
+
   // 3. Schedule Passive Effects
   schedulePassiveEffects();
 }
@@ -390,8 +399,8 @@ Unlike the render phase, every commit phase results in actual DOM updates:
 
 ```javascript
 // Each of these will trigger a commit
-setState(newState);        // State updates
-forceUpdate();            // Force re-renders
+setState(newState); // State updates
+forceUpdate(); // Force re-renders
 ReactDOM.render(element); // Initial renders
 ```
 
@@ -413,18 +422,20 @@ const Component = memo(({ text }) => {
 
 // Use transitions for non-urgent updates
 startTransition(() => {
-  setCount(c => c + 1);
+  setCount((c) => c + 1);
 });
 ```
 
 ## Developer Considerations
 
 1. Keep commit phase work minimal by:
+
    - Avoiding heavy computations in lifecycle methods
    - Using `useLayoutEffect` sparingly
    - Minimizing DOM manipulations
 
 2. Handle measurements and mutations appropriately:
+
 ```javascript
 // Use useLayoutEffect for DOM measurements
 useLayoutEffect(() => {
@@ -434,6 +445,7 @@ useLayoutEffect(() => {
 ```
 
 3. Properly cleanup effects:
+
 ```javascript
 useEffect(() => {
   const subscription = subscribe();
@@ -445,6 +457,7 @@ useEffect(() => {
 ```
 
 Understanding the commit phase is crucial for:
+
 - Debugging rendering issues
 - Optimizing performance
 - Managing side effects appropriately
@@ -452,3 +465,51 @@ Understanding the commit phase is crucial for:
 - Handling DOM measurements correctly
 
 This knowledge helps developers create more performant and predictable React applications.
+
+---
+
+# How Events Work in React
+
+- Event Bubbling - Events bubble up through parent elements
+- Event Delegation - Single handler manages events on multiple children
+- Event Capturing - Events captured from parent down before bubbling
+- Synthetic Events - React's cross-browser wrapper around native events
+
+# Frameworks vs. Libraries, and The React Ecosystem
+
+## Frameworks
+
+- Frameworks control the flow of the application and call your code.
+- Frameworks are opinionated and dictate the structure of your application.
+- Frameworks are larger and provide a complete solution.
+- Frameworks often include multiple built-in libraries and tools.
+- Frameworks usually have a steeper learning curve due to their complexity.
+- Frameworks: Angular, Next.js, Vue.js
+
+## Libraries
+
+- Libraries provide functions that you call when needed.
+- Libraries offer specific functionalities without enforcing a structure.
+- Libraries are smaller and focus on specific tasks (e.g., DOM manipulation, HTTP requests).
+- Libraries are standalone and can be used with different frameworks.
+- Libraries are generally easier to learn and integrate.
+- Libraries: React, jQuery, Lodash
+
+## The React Ecosystem
+
+- Component-Based Architecture – Reusable UI components.
+- JSX (JavaScript XML) – Syntax extension for rendering UI.
+- Virtual DOM – Efficient updates and rendering.
+- State Management – Hooks (useState, useReducer), Redux, Zustand.
+- Props – Data passed between components.
+- Hooks – Built-in (useEffect, useContext), custom hooks.
+- Context API – Global state management without Redux.
+- React Router – Navigation and routing.
+- Server-Side Rendering (SSR) – Next.js for pre-rendering.
+- Client-Side Rendering (CSR) – Standard React rendering.
+- Static Site Generation (SSG) – Pre-built pages (Next.js).
+- Progressive Web Apps (PWA) – Service workers, offline support.
+- React Query – Data fetching and caching.
+- React Testing Library / Vitest – Component testing.
+- Babel & Webpack – Compilation and bundling.
+- TypeScript Support – Strongly typed components.
