@@ -11,13 +11,14 @@ export interface Movie {
 
 interface Props {
   movie: Movie;
+  onMovieSelection: (id: string) => void;
 }
 
-const MovieCard = ({ movie }: Props) => {
+const MovieCard = ({ movie, onMovieSelection }: Props) => {
   const isWatchedMovie =
     movie?.imdbRating && movie?.runtime && movie?.userRating;
   return (
-    <li key={movie.imdbID}>
+    <li key={movie.imdbID} onClick={() => onMovieSelection(movie.imdbID)}>
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
       <h3>{movie.Title}</h3>
       {isWatchedMovie && (
