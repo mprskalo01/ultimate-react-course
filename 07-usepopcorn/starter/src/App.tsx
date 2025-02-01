@@ -66,7 +66,6 @@ function App() {
           if (data.Response === 'False') throw new Error('No movies found');
 
           setMovies(data.Search);
-          console.log(data.Search);
         } catch (error) {
           if (error instanceof Error) {
             setError(error.message);
@@ -120,7 +119,10 @@ function App() {
           ) : (
             <>
               <WatchedSummary movies={watched} />
-              <MovieList movies={watched} />
+              <MovieList
+                movies={watched}
+                onMovieSelection={() => console.log('whoops')}
+              />
             </>
           )}
         </Box>
