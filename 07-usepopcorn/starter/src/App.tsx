@@ -53,11 +53,10 @@ function App() {
           if (data.Response === 'False') throw new Error('No movies found');
 
           setMovies(data.Search);
+          setError('');
         } catch (error) {
           if (error instanceof Error && error.name !== 'AbortError') {
             setError(error.message);
-          } else {
-            setError('An unknown error occured');
           }
         } finally {
           setIsLoading(false);
@@ -68,6 +67,7 @@ function App() {
         setError('');
         return;
       }
+      handleMovieClose();
       fetchMovies();
       return function () {
         controller.abort();
@@ -79,7 +79,7 @@ function App() {
   return (
     <>
       <NavBar>
-        <Search setQuery={setQuery} />
+        <Search query={query} setQuery={setQuery} />
         <NumberOfResults movies={movies} />
       </NavBar>
       <Main>

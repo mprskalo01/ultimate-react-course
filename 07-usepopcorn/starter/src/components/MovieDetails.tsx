@@ -97,6 +97,22 @@ const MovieDetails = ({
     [title, year]
   );
 
+  useEffect(
+    function () {
+      function callback(event: KeyboardEvent) {
+        if (event.code === 'Escape') {
+          onMovieClose();
+        }
+      }
+
+      document.addEventListener('keydown', callback);
+      return function () {
+        document.removeEventListener('keydown', callback);
+      };
+    },
+    [onMovieClose]
+  );
+
   function handleAdd() {
     const newWatchedMovie = {
       imdbID: selectedId,
@@ -107,7 +123,6 @@ const MovieDetails = ({
       runtime: Number(runtime?.split(' ')[0]),
       userRating,
     };
-    console.log(newWatchedMovie);
     onAddWatched(newWatchedMovie);
     onMovieClose();
   }
