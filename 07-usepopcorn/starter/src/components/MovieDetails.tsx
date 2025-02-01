@@ -1,44 +1,63 @@
 import { useEffect, useState } from 'react';
 import StarRating from './StarRating/StarRating';
 import Loader from './Loader';
+import { Movie } from './MovieCard';
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 interface Props {
   selectedId: string;
+  watchedMovies: Movie[];
   onMovieClose: () => void;
+  onAddWatched: (movie: Movie) => void;
 }
 
 interface ResponseMovie {
-  Title: string | null;
-  Year: string | null;
-  Poster: string | null;
-  Runtime: string | null;
-  imdbRating: string | null;
-  Plot: string | null;
-  Released: string | null;
-  Actors: string | null;
-  Director: string | null;
-  Genre: string | null;
+  Title: string;
+  Year: string;
+  Poster: string;
+  Runtime: string;
+  imdbRating: string;
+  Plot: string;
+  Released: string;
+  Actors: string;
+  Director: string;
+  Genre: string;
+  userRating?: number;
 }
 
-const MovieDetails = ({ selectedId, onMovieClose }: Props) => {
+const MovieDetails = ({
+  selectedId,
+  watchedMovies,
+  onMovieClose,
+  onAddWatched,
+}: Props) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [userRating, setUserRating] = useState(0);
+
+  const isAlreadyWatched = watchedMovies
+    .map((movie) => movie.imdbID)
+    .includes(selectedId);
+
+  const watchedUserRating = watchedMovies.find(
+    (movie) => movie.imdbID === selectedId
+  )?.userRating;
+
   const [movie, setMovie] = useState<ResponseMovie>({
-    Title: null,
-    Year: null,
-    Poster: null,
-    Runtime: null,
-    imdbRating: null,
-    Plot: null,
-    Released: null,
-    Actors: null,
-    Director: null,
-    Genre: null,
+    Title: '',
+    Year: '',
+    Poster: '',
+    Runtime: '',
+    imdbRating: '',
+    Plot: '',
+    Released: '',
+    Actors: '',
+    Director: '',
+    Genre: '',
   });
 
   const {
     Title: title,
-    // Year: year,
+    Year: year,
     Poster: poster,
     Runtime: runtime,
     imdbRating,
@@ -64,6 +83,22 @@ const MovieDetails = ({ selectedId, onMovieClose }: Props) => {
     },
     [selectedId]
   );
+
+  function handleAdd() {
+    const newWatchedMovie = {
+      imdbID: selectedId,
+      Title: title,
+      Year: year,
+      Poster: poster,
+      imdbRating: Number(imdbRating),
+      runtime: Number(runtime?.split(' ')[0]),
+      userRating,
+    };
+    console.log(newWatchedMovie);
+    onAddWatched(newWatchedMovie);
+    onMovieClose();
+  }
+
   return (
     <div className="details">
       {isLoading ? (
@@ -74,7 +109,7 @@ const MovieDetails = ({ selectedId, onMovieClose }: Props) => {
             <button className="btn-back" onClick={onMovieClose}>
               &larr;
             </button>
-            <img src={poster ? poster : undefined} alt={`Poster of ${movie}`} />
+            {poster ? <img src={poster} alt={`Poster of ${movie}`} /> : ''}
             <div className="details-overview">
               <h2>{title}</h2>
               <p>
@@ -88,7 +123,24 @@ const MovieDetails = ({ selectedId, onMovieClose }: Props) => {
           </header>
           <section>
             <div className="rating">
-              <StarRating maxRating={10} size={24} />
+              {!isAlreadyWatched ? (
+                <>
+                  <StarRating
+                    maxRating={10}
+                    size={24}
+                    onSetRating={setUserRating}
+                    defaultRating={userRating}
+                  />
+                  {userRating > 0 && (
+                    <button className="btn-add" onClick={handleAdd}>
+                      {' '}
+                      + Add to watched
+                    </button>
+                  )}
+                </>
+              ) : (
+                `You rated this movie with ${watchedUserRating} 🌟`
+              )}
             </div>
             <p>
               <em>{plot}</em>
