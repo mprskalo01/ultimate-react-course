@@ -12,9 +12,9 @@ const Search = ({ setQuery }: Props) => {
       type="text"
       placeholder="Search movies..."
       value={inputQuery}
-      onChange={(e) => setInputQuery(e.target.value)}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter') {
+      onChange={(event) => setInputQuery(event.target.value)}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter') {
           setQuery(inputQuery);
         }
       }}

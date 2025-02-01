@@ -23,6 +23,7 @@ interface ResponseMovie {
   Director: string;
   Genre: string;
   userRating?: number;
+  totalSeasons?: string;
 }
 
 const MovieDetails = ({
@@ -82,6 +83,18 @@ const MovieDetails = ({
       getMovieDetails();
     },
     [selectedId]
+  );
+
+  useEffect(
+    function () {
+      if (!title) return;
+      document.title = `${year.includes('–') ? 'Series' : 'Movie'} | ${title}`;
+
+      return function () {
+        document.title = 'usePopcorn';
+      };
+    },
+    [title, year]
   );
 
   function handleAdd() {
