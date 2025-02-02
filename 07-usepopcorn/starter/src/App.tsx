@@ -84,22 +84,15 @@ function App() {
       </NavBar>
       <Main>
         <Box>
-          {isLoading ? (
-            <Loader />
-          ) : error ? (
-            <ErrorMessage message={error} />
-          ) : (
+          {isLoading && <Loader />}
+          {!isLoading && !error && (
             <MovieList
               movies={movies}
               onMovieSelection={handleMovieSelection}
             />
           )}
-        </Box>
-        {/* <Box>
-          {isLoading && <Loader />}
-          {!isLoading && !error && <MovieList movies={movies} />}
           {error && <ErrorMessage message={error} />}
-        </Box> */}
+        </Box>
         <Box>
           {selectedId ? (
             <MovieDetails

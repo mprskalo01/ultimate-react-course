@@ -69,6 +69,10 @@ const MovieDetails = ({
     Genre: genre,
   } = movie;
 
+  // /* eslint-disable */ // Breaking rules of hooks for understanding
+  // if (Number(imdbRating) > 8) [isTop, setIsTop] = useState(true);
+  // if (Number(imdbRating) > 8) return <p>greatest ever!</p>
+
   useEffect(
     function () {
       async function getMovieDetails() {
