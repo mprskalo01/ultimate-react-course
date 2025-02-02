@@ -14,11 +14,15 @@ const API_KEY = import.meta.env.VITE_API_KEY;
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [watched, setWatched] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [query, setQuery] = useState('');
   const [selectedId, setSelectedId] = useState('');
+  // const [watched, setWatched] = useState<Movie[]>([]);
+  const [watched, setWatched] = useState<Movie[]>(function () {
+    const storedValue = localStorage.getItem('watchedMovies');
+    return JSON.parse(storedValue as string);
+  });
 
   function handleMovieSelection(id: string) {
     setSelectedId((selectedId) => (id === selectedId ? '' : id));
@@ -34,6 +38,13 @@ function App() {
   function handleDeleteWatched(id: string) {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   }
+
+  useEffect(
+    function () {
+      localStorage.setItem('watchedMovies', JSON.stringify(watched));
+    },
+    [watched]
+  );
 
   useEffect(
     function () {
@@ -106,7 +117,7 @@ function App() {
               <WatchedSummary movies={watched} />
               <MovieList
                 movies={watched}
-                onMovieSelection={handleMovieSelection}
+                onMovieSelection={() => console.log()}
                 onDeleteWatched={handleDeleteWatched}
               />
             </>

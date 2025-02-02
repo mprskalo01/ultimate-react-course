@@ -73,6 +73,17 @@ const MovieDetails = ({
   // if (Number(imdbRating) > 8) [isTop, setIsTop] = useState(true);
   // if (Number(imdbRating) > 8) return <p>greatest ever!</p>
 
+  // const [isTop, setIsTop] = useState(Number(imdbRating) > 8);
+  // console.log(isTop);
+  // useEffect(
+  //   function () {
+  //     setIsTop(Number(imdbRating) > 8);
+  //   },
+  //   [imdbRating]
+  // );
+  // const isTop = Number(imdbRating) > 8; // using derived state
+  // console.log(isTop);
+
   useEffect(
     function () {
       async function getMovieDetails() {
@@ -93,7 +104,6 @@ const MovieDetails = ({
     function () {
       if (!title) return;
       document.title = `${year.includes('–') ? 'Series' : 'Movie'} | ${title}`;
-
       return function () {
         document.title = 'usePopcorn';
       };
