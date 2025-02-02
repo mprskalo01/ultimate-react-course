@@ -69,21 +69,6 @@ const MovieDetails = ({
     Genre: genre,
   } = movie;
 
-  // /* eslint-disable */ // Breaking rules of hooks for understanding
-  // if (Number(imdbRating) > 8) [isTop, setIsTop] = useState(true);
-  // if (Number(imdbRating) > 8) return <p>greatest ever!</p>
-
-  // const [isTop, setIsTop] = useState(Number(imdbRating) > 8);
-  // console.log(isTop);
-  // useEffect(
-  //   function () {
-  //     setIsTop(Number(imdbRating) > 8);
-  //   },
-  //   [imdbRating]
-  // );
-  // const isTop = Number(imdbRating) > 8; // using derived state
-  // console.log(isTop);
-
   useEffect(
     function () {
       async function getMovieDetails() {
