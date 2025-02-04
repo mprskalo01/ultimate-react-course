@@ -1,10 +1,11 @@
 import './App.css';
+import CurrencyConverter from './components/CurrencyConverter/CurrencyConverter';
 // import AccordionList from './components/Accordion/AccordionList';
 // import FlashCardList from './components/FlashCards/FlashCardList';
 // import DateCounter from './components/DateCounter/DateCounter';
 // import ProfileCard from './components/ProfileCard/ProfileCard';
 // import TipCalculator from './components/TipCalculator/TipCalculator';
-import TextExpander from './components/TextExpander/TextExpander';
+// import TextExpander from './components/TextExpander/TextExpander';
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
       {/* <FlashCardList /> */}
       {/* <AccordionList /> */}
       {/* <TipCalculator /> */}
-      <TextExpander
+      {/* <TextExpander
         collapsedNumWords={20}
         expandButtonText="Show text"
         collapseButtonText="Collapse text"
@@ -25,7 +26,8 @@ function App() {
         space organizations. And while it's not always easy (or cheap), the
         results are out of this world. Think about the first time humans stepped
         foot on the moon or when rovers were sent to roam around on Mars.
-      </TextExpander>
+      </TextExpander> */}
+      <CurrencyConverter />
     </>
   );
 }
