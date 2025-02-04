@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import StarRating from './StarRating/StarRating';
 import Loader from './Loader';
 import { Movie } from './MovieCard';
@@ -34,6 +34,15 @@ const MovieDetails = ({
 }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState(0);
+
+  const countRef = useRef(0);
+
+  useEffect(
+    function () {
+      if (userRating) countRef.current = countRef.current + 1;
+    },
+    [userRating]
+  );
 
   const isAlreadyWatched = watchedMovies
     .map((movie) => movie.imdbID)
@@ -121,6 +130,7 @@ const MovieDetails = ({
       imdbRating: Number(imdbRating),
       runtime: Number(runtime?.split(' ')[0]),
       userRating,
+      countRatingDecisions: countRef.current,
     };
     onAddWatched(newWatchedMovie);
     onMovieClose();
