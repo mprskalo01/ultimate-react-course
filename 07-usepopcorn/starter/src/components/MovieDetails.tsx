@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import StarRating from './StarRating/StarRating';
 import Loader from './Loader';
 import { Movie } from './MovieCard';
+import { useKey } from '../../hooks/useKey';
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 interface Props {
@@ -105,21 +106,7 @@ const MovieDetails = ({
     [title, year]
   );
 
-  useEffect(
-    function () {
-      function callback(event: KeyboardEvent) {
-        if (event.code === 'Escape') {
-          onMovieClose();
-        }
-      }
-
-      document.addEventListener('keydown', callback);
-      return function () {
-        document.removeEventListener('keydown', callback);
-      };
-    },
-    [onMovieClose]
-  );
+  useKey('Escape', onMovieClose);
 
   function handleAdd() {
     const newWatchedMovie = {

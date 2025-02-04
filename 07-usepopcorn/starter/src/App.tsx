@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Main from './components/Main';
 import NavBar from './components/NavBar/NavBar';
 import NumberOfResults from './components/NavBar/NumberOfResults';
@@ -10,19 +10,20 @@ import WatchedSummary from './components/WatchedSummary';
 import Loader from './components/Loader';
 import ErrorMessage from './components/ErrorMessage';
 import MovieDetails from './components/MovieDetails';
+import { useMovies } from '../hooks/useMovies';
+import { useLocalStorageState } from '../hooks/useLocalStorageState';
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 function App() {
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
   const [query, setQuery] = useState('');
   const [selectedId, setSelectedId] = useState('');
-  // const [watched, setWatched] = useState<Movie[]>([]);
-  const [watched, setWatched] = useState<Movie[]>(function () {
-    const storedValue = localStorage.getItem('watchedMovies');
-    return JSON.parse(storedValue as string);
-  });
+
+  const { movies, isLoading, error } = useMovies(query, API_KEY);
+
+  const [watched, setWatched] = useLocalStorageState<Movie[]>(
+    [],
+    'watchedMovies'
+  );
 
   function handleMovieSelection(id: string) {
     setSelectedId((selectedId) => (id === selectedId ? '' : id));
@@ -32,60 +33,14 @@ function App() {
   }
 
   function handleAddWatched(watchedMovie: Movie) {
-    setWatched((watched) => [...watched, watchedMovie]);
+    setWatched((watched: Movie[]) => [...watched, watchedMovie]);
   }
 
   function handleDeleteWatched(id: string) {
-    setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
+    setWatched((watched: Movie[]) =>
+      watched.filter((movie) => movie.imdbID !== id)
+    );
   }
-
-  useEffect(
-    function () {
-      localStorage.setItem('watchedMovies', JSON.stringify(watched));
-    },
-    [watched]
-  );
-
-  useEffect(
-    function () {
-      const controller = new AbortController();
-      async function fetchMovies() {
-        try {
-          setIsLoading(true);
-          setError('');
-          const res = await fetch(
-            `http://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`,
-            { signal: controller.signal }
-          );
-          // if (!res.ok)
-          //   throw new Error('Something went wrong with fetching movies.');
-
-          const data = await res.json();
-          if (data.Response === 'False') throw new Error('No movies found');
-
-          setMovies(data.Search);
-          setError('');
-        } catch (error) {
-          if (error instanceof Error && error.name !== 'AbortError') {
-            setError(error.message);
-          }
-        } finally {
-          setIsLoading(false);
-        }
-      }
-      if (query.length < 3) {
-        setMovies([]);
-        setError('');
-        return;
-      }
-      handleMovieClose();
-      fetchMovies();
-      return function () {
-        controller.abort();
-      };
-    },
-    [query]
-  );
 
   return (
     <>
