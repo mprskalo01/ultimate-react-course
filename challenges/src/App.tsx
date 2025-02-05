@@ -1,5 +1,6 @@
 import './App.css';
-import CurrencyConverter from './components/CurrencyConverter/CurrencyConverter';
+import GeolocationComponent from './components/Geolocation/GeolocationComponent';
+// import CurrencyConverter from './components/CurrencyConverter/CurrencyConverter';
 // import AccordionList from './components/Accordion/AccordionList';
 // import FlashCardList from './components/FlashCards/FlashCardList';
 // import DateCounter from './components/DateCounter/DateCounter';
@@ -27,7 +28,8 @@ function App() {
         results are out of this world. Think about the first time humans stepped
         foot on the moon or when rovers were sent to roam around on Mars.
       </TextExpander> */}
-      <CurrencyConverter />
+      {/* <CurrencyConverter /> */}
+      <GeolocationComponent />
     </>
   );
 }
