@@ -19,7 +19,7 @@ const Search = ({ query, setQuery }: Props) => {
   useKey('Enter', function () {
     if (document.activeElement === inputEl.current) return;
 
-    (inputEl.current as HTMLElement).focus();
+    (inputEl.current as HTMLInputElement).focus();
     setQuery('');
   });
 
