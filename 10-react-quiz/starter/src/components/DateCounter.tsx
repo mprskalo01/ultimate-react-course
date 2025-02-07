@@ -5,7 +5,7 @@ function DateCounter() {
   const [step, setStep] = useState(1);
 
   // This mutates the date object.
-  const date = new Date('june 21 2027');
+  const date = new Date();
   date.setDate(date.getDate() + count);
 
   const dec = function () {
