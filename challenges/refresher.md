@@ -1,5 +1,3 @@
-# React Concepts Cheat Sheet
-
 ## 🟢 Beginner Concepts
 
 ### 1. Components
