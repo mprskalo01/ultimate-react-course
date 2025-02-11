@@ -1,25 +1,45 @@
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
+
+interface Reducer {
+  type: string;
+  payload?: number;
+}
+function reducer(state: number, action: Reducer) {
+  console.log(state, action);
+  if (action.type === 'inc') return state + 1;
+  if (action.type === 'dec') return state - 1;
+  if (action.type === 'setCount') return action.payload ?? state;
+  return state;
+}
 
 function DateCounter() {
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
+
+  const [count, dispatch] = useReducer(reducer, 0);
   const [step, setStep] = useState(1);
 
   // This mutates the date object.
   const date = new Date();
   date.setDate(date.getDate() + count);
 
-  const dec = function () {
+  const decrease = function () {
     // setCount((count) => count - 1);
-    setCount((count) => count - step);
+    // setCount((count) => count - step);
+    dispatch({ type: 'dec' });
   };
 
-  const inc = function () {
+  const increase = function () {
     // setCount((count) => count + 1);
-    setCount((count) => count + step);
+    // setCount((count) => count + step);
+    dispatch({ type: 'inc' });
   };
 
   const defineCount = function (event: React.ChangeEvent<HTMLInputElement>) {
-    setCount(Number((event.target as HTMLInputElement).value));
+    // setCount(Number((event.target as HTMLInputElement).value));
+    dispatch({
+      type: 'setCount',
+      payload: Number((event.target as HTMLInputElement).value),
+    });
   };
 
   const defineStep = function (event: React.ChangeEvent<HTMLInputElement>) {
@@ -27,7 +47,7 @@ function DateCounter() {
   };
 
   const reset = function () {
-    setCount(0);
+    // setCount(0);
     setStep(1);
   };
 
@@ -45,9 +65,9 @@ function DateCounter() {
       </div>
 
       <div>
-        <button onClick={dec}>-</button>
+        <button onClick={decrease}>-</button>
         <input value={count} onChange={defineCount} />
-        <button onClick={inc}>+</button>
+        <button onClick={increase}>+</button>
       </div>
 
       <p>{date.toDateString()}</p>
