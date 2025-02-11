@@ -5,6 +5,7 @@ import Main from './components/Main';
 import Loader from './components/Loader';
 import ErrorComponent from './components/ErrorComponent';
 import StartScreen from './components/StartScreen';
+import Question from './components/Question';
 
 interface Question {
   correctOption: number;
@@ -18,7 +19,7 @@ interface State {
   questions: Question[];
   status: string;
 }
-interface Reducer {
+export interface Reducer {
   type: string;
   payload?: Question[];
 }
@@ -38,6 +39,8 @@ function reducer(state: State, action: Reducer) {
       };
     case 'dataFailed':
       return { ...state, status: 'error' };
+    case 'start':
+      return { ...state, status: 'active' };
     default:
       throw new Error('Action not recognized');
   }
@@ -64,8 +67,12 @@ function App() {
         {status === 'loading' && <Loader />}
         {status === 'error' && <ErrorComponent />}
         {status === 'ready' && (
-          <StartScreen numberOfQuestions={numberOfQuestions} />
+          <StartScreen
+            numberOfQuestions={numberOfQuestions}
+            dispatch={dispatch}
+          />
         )}
+        {status === 'active' && <Question />}
       </Main>
     </div>
   );
