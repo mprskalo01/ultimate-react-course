@@ -7,7 +7,7 @@ import ErrorComponent from './components/ErrorComponent';
 import StartScreen from './components/StartScreen';
 import Question from './components/Question';
 
-interface Question {
+export interface Question {
   correctOption: number;
   id: string;
   options: string[];
@@ -18,6 +18,8 @@ interface Question {
 interface State {
   questions: Question[];
   status: string;
+  index: number;
+  answer: null | number;
 }
 export interface Reducer {
   type: string;
@@ -27,6 +29,8 @@ export interface Reducer {
 const initialState = {
   questions: [],
   status: 'loading', // 'loading', 'error', 'ready', 'active', 'finished'
+  index: 0,
+  answer: null,
 };
 
 function reducer(state: State, action: Reducer) {
@@ -41,13 +45,22 @@ function reducer(state: State, action: Reducer) {
       return { ...state, status: 'error' };
     case 'start':
       return { ...state, status: 'active' };
+    case 'newAnswer':
+      return {
+        ...state,
+        answer:
+          typeof action.payload === 'number' ? action.payload : state.answer,
+      };
     default:
       throw new Error('Action not recognized');
   }
 }
 
 function App() {
-  const [{ questions, status }, dispatch] = useReducer(reducer, initialState);
+  const [{ questions, status, index, answer }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
 
   const numberOfQuestions = questions.length;
 
@@ -72,7 +85,13 @@ function App() {
             dispatch={dispatch}
           />
         )}
-        {status === 'active' && <Question />}
+        {status === 'active' && (
+          <Question
+            question={questions[index]}
+            dispatch={dispatch}
+            answer={answer}
+          />
+        )}
       </Main>
     </div>
   );
