@@ -20,10 +20,11 @@ interface State {
   status: string;
   index: number;
   answer: null | number;
+  points: number;
 }
 export interface Reducer {
   type: string;
-  payload?: Question[];
+  payload?: Question[] | number | null;
 }
 
 const initialState = {
@@ -31,26 +32,35 @@ const initialState = {
   status: 'loading', // 'loading', 'error', 'ready', 'active', 'finished'
   index: 0,
   answer: null,
+  points: 0,
 };
 
-function reducer(state: State, action: Reducer) {
+function reducer(state: State, action: Reducer): State {
   switch (action.type) {
     case 'dataRecieved':
       return {
         ...state,
-        questions: action.payload ?? state.questions,
+        questions: Array.isArray(action.payload)
+          ? action.payload
+          : state.questions,
         status: 'ready',
       };
     case 'dataFailed':
       return { ...state, status: 'error' };
     case 'start':
       return { ...state, status: 'active' };
-    case 'newAnswer':
+    case 'newAnswer': {
+      const question = state.questions[state.index];
       return {
         ...state,
         answer:
           typeof action.payload === 'number' ? action.payload : state.answer,
+        points:
+          action.payload === question.correctOption
+            ? state.points + question.points
+            : state.points,
       };
+    }
     default:
       throw new Error('Action not recognized');
   }
