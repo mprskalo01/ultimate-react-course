@@ -7,7 +7,6 @@ interface Props {
   answer: number | null;
 }
 const Question = ({ question, dispatch, answer }: Props) => {
-  console.log(question);
   return (
     <div>
       <h4>{question.question}</h4>
