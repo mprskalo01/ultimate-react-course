@@ -11,6 +11,7 @@ import Progress from './components/Progress';
 import FinishScreen from './components/FinishScreen';
 import Timer from './components/Timer';
 import Footer from './components/Footer';
+import { questionsArray } from '../data/questions';
 
 export interface Question {
   correctOption: number;
@@ -119,15 +120,22 @@ function App() {
     0
   );
 
-  useEffect(function () {
-    fetch('http://localhost:8000/questions')
-      .then((res) => res.json())
-      .then((data) => dispatch({ type: 'dataRecieved', payload: data }))
-      .catch((error) => {
-        console.log(error, 'Error fetching data');
-        dispatch({ type: 'dataFailed' });
-      });
-  }, []);
+  // USE THIS TO LOAD FROM TS FILE
+  useEffect(() => {
+    dispatch({ type: 'dataRecieved', payload: questionsArray });
+  }, [dispatch]);
+
+  // USE THIS WITH JSON SERVER
+  // useEffect(function () {
+  //   fetch('http://localhost:8000/questions')
+  //     .then((res) => res.json())
+  //     .then((data) => dispatch({ type: 'dataRecieved', payload: data }))
+  //     .catch((error) => {
+  //       console.log(error, 'Error fetching data');
+  //       dispatch({ type: 'dataFailed' });
+  //     });
+  // }, []);
+
   return (
     <div className="app">
       <Header />
