@@ -1,5 +1,6 @@
 import './App.css';
-import GeolocationComponent from './components/Geolocation/GeolocationComponent';
+import BankAccount from './components/BankAccount/BankAccount';
+// import GeolocationComponent from './components/Geolocation/GeolocationComponent';
 // import CurrencyConverter from './components/CurrencyConverter/CurrencyConverter';
 // import AccordionList from './components/Accordion/AccordionList';
 // import FlashCardList from './components/FlashCards/FlashCardList';
@@ -29,7 +30,8 @@ function App() {
         foot on the moon or when rovers were sent to roam around on Mars.
       </TextExpander> */}
       {/* <CurrencyConverter /> */}
-      <GeolocationComponent />
+      {/* <GeolocationComponent /> */}
+      <BankAccount />
     </>
   );
 }
