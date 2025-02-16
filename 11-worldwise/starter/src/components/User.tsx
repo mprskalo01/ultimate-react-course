@@ -1,10 +1,17 @@
-import styles from "./User.module.css";
+import styles from './User.module.css';
 
-const FAKE_USER = {
-  name: "Jack",
-  email: "jack@example.com",
-  password: "qwerty",
-  avatar: "https://i.pravatar.cc/100?u=zz",
+interface User {
+  name: string;
+  email: string;
+  password: string;
+  avatar: string;
+}
+
+const FAKE_USER: User = {
+  name: 'Jack',
+  email: 'jack@example.com',
+  password: 'qwerty',
+  avatar: 'https://i.pravatar.cc/100?u=zz',
 };
 
 function User() {

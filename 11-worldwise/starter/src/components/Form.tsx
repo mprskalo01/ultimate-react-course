@@ -1,22 +1,13 @@
 // "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=0&longitude=0"
 
-import { useState } from "react";
-
-import styles from "./Form.module.css";
-
-export function convertToEmoji(countryCode) {
-  const codePoints = countryCode
-    .toUpperCase()
-    .split("")
-    .map((char) => 127397 + char.charCodeAt());
-  return String.fromCodePoint(...codePoints);
-}
+import { useState } from 'react';
+import styles from './Form.module.css';
 
 function Form() {
-  const [cityName, setCityName] = useState("");
-  const [country, setCountry] = useState("");
-  const [date, setDate] = useState(new Date());
-  const [notes, setNotes] = useState("");
+  const [cityName, setCityName] = useState<string>('');
+  // const [country, setCountry] = useState('');
+  const [date, setDate] = useState<Date>(new Date());
+  const [notes, setNotes] = useState<string>('');
 
   return (
     <form className={styles.form}>
@@ -27,15 +18,15 @@ function Form() {
           onChange={(e) => setCityName(e.target.value)}
           value={cityName}
         />
-        {/* <span className={styles.flag}>{emoji}</span> */}
       </div>
 
       <div className={styles.row}>
         <label htmlFor="date">When did you go to {cityName}?</label>
         <input
           id="date"
-          onChange={(e) => setDate(e.target.value)}
-          value={date}
+          type="date"
+          onChange={(e) => setDate(new Date(e.target.value))}
+          value={date.toISOString().split('T')[0]}
         />
       </div>
 
@@ -49,8 +40,8 @@ function Form() {
       </div>
 
       <div className={styles.buttons}>
-        <button>Add</button>
-        <button>&larr; Back</button>
+        <button type="submit">Add</button>
+        <button type="button">&larr; Back</button>
       </div>
     </form>
   );
