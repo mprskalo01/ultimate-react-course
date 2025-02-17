@@ -2,8 +2,11 @@
 
 import { useState } from 'react';
 import styles from './Form.module.css';
+import Button from './Button';
+import { useNavigate } from 'react-router';
 
 function Form() {
+  const navigate = useNavigate();
   const [cityName, setCityName] = useState<string>('');
   // const [country, setCountry] = useState('');
   const [date, setDate] = useState<Date>(new Date());
@@ -40,8 +43,18 @@ function Form() {
       </div>
 
       <div className={styles.buttons}>
-        <button type="submit">Add</button>
-        <button type="button">&larr; Back</button>
+        <Button onClick={() => {}} type="primary">
+          Add
+        </Button>
+        <Button
+          onClick={(event) => {
+            event.preventDefault();
+            navigate(-1);
+          }}
+          type="back"
+        >
+          &larr; Back
+        </Button>
       </div>
     </form>
   );

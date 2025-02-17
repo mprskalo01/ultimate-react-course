@@ -1,4 +1,4 @@
-import { useParams } from 'react-router';
+// import { useParams } from 'react-router';
 import styles from './City.module.css';
 import { City as CityInterface } from './CityList';
 
@@ -15,7 +15,7 @@ const formatDate = (date: string) =>
   }).format(new Date(date));
 
 function City({ cities }: Props) {
-  const { id } = useParams();
+  // const { id } = useParams();
   const currentCity = cities[0];
   const { cityName, emoji, date, notes } = currentCity;
 
