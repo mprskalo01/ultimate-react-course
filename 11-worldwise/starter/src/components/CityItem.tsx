@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import styles from './CityItem.module.css';
 import { City } from './CityList';
 
@@ -27,11 +28,13 @@ const formatDate = (date: string) =>
 const CityItem = ({ city }: Props) => {
   const { cityName, emoji, date } = city;
   return (
-    <li className={styles.cityItem}>
-      <span className={styles.emoji}>{formatEmoji(emoji)}</span>
-      <h3 className={styles.name}>{cityName}</h3>
-      <time className={styles.date}>{formatDate(date)}</time>
-      <button className={styles.deleteBtn}>&times;</button>
+    <li>
+      <Link className={styles.cityItem} to={`${city.id}`}>
+        <span className={styles.emoji}>{formatEmoji(emoji)}</span>
+        <h3 className={styles.name}>{cityName}</h3>
+        <time className={styles.date}>{formatDate(date)}</time>
+        <button className={styles.deleteBtn}>&times;</button>
+      </Link>
     </li>
   );
 };
