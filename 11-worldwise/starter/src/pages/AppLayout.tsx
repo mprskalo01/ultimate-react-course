@@ -1,9 +1,13 @@
+import Map from '../components/Map';
+import Sidebar from '../components/Sidebar';
+import styles from './AppLayout.module.css';
 const AppLayout = () => {
   return (
-    <div>
-      <h1>AppLayout</h1>
+    <div className={styles.app}>
+      <Sidebar />
+      <Map />
     </div>
-  )
-}
+  );
+};
 
-export default AppLayout
+export default AppLayout;
