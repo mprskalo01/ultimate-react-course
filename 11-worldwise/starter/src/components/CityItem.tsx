@@ -26,10 +26,13 @@ const formatDate = (date: string) =>
   }).format(new Date(date));
 
 const CityItem = ({ city }: Props) => {
-  const { cityName, emoji, date } = city;
+  const { cityName, emoji, date, position } = city;
   return (
     <li>
-      <Link className={styles.cityItem} to={`${city.id}`}>
+      <Link
+        className={styles.cityItem}
+        to={`${city.id}?lat=${position.lat}&lng=${position.lng}`}
+      >
         <span className={styles.emoji}>{formatEmoji(emoji)}</span>
         <h3 className={styles.name}>{cityName}</h3>
         <time className={styles.date}>{formatDate(date)}</time>
