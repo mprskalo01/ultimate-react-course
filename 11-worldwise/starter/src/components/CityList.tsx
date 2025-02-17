@@ -28,11 +28,9 @@ const CityList = ({ cities, isLoading }: Props) => {
 
   return (
     <ul className={styles.cityList}>
-      <h1>
-        {cities.map((city) => (
-          <CityItem city={city} key={city.id} />
-        ))}
-      </h1>
+      {cities.map((city) => (
+        <CityItem city={city} key={city.id} />
+      ))}
     </ul>
   );
 };

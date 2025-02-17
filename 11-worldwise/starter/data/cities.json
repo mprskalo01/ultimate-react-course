@@ -25,6 +25,18 @@
       "id": 17806751
     },
     {
+      "cityName": "Barcelona",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2027-07-15T08:22:53.976Z",
+      "notes": "",
+      "position": {
+        "lat": 41.390205,
+        "lng": 2.154007
+      },
+      "id": 13856281
+    },
+    {
       "cityName": "Berlin",
       "country": "Germany",
       "emoji": "🇩🇪",
