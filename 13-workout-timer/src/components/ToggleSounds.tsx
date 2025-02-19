@@ -4,7 +4,7 @@ function ToggleSounds({ allowSound, setAllowSound }) {
       className="btn-sound"
       onClick={() => setAllowSound((allow) => !allow)}
     >
-      {allowSound ? "🔈" : "🔇"}
+      {allowSound ? '🔈' : '🔇'}
     </button>
   );
 }
