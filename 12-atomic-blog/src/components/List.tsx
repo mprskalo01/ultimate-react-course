@@ -1,4 +1,9 @@
-function List({ posts }) {
+import { Post } from '../App';
+
+interface Props {
+  posts: Post[];
+}
+function List({ posts }: Props) {
   return (
     <ul>
       {posts.map((post, i) => (

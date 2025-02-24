@@ -1,5 +1,14 @@
 import { useEffect, useState } from 'react';
 import { faker } from '@faker-js/faker';
+import Header from './components/Header';
+import Main from './components/Main';
+import Archive from './components/Archive';
+import Footer from './components/Footer';
+
+export interface Post {
+  title: string;
+  body: string;
+}
 
 function createRandomPost() {
   return {
@@ -25,7 +34,7 @@ function App() {
         )
       : posts;
 
-  function handleAddPost(post) {
+  function handleAddPost(post: Post) {
     setPosts((posts) => [post, ...posts]);
   }
 

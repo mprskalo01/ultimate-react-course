@@ -1,4 +1,15 @@
-function Header({ posts, onClearPosts, searchQuery, setSearchQuery }) {
+import { Post } from '../App';
+import Results from './Results';
+import SearchPosts from './SearchPosts';
+
+interface Props {
+  posts: Post[];
+  onClearPosts: () => void;
+  searchQuery: string;
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+}
+
+function Header({ posts, onClearPosts, searchQuery, setSearchQuery }: Props) {
   return (
     <header>
       <h1>
