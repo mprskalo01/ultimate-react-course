@@ -1,20 +1,12 @@
 import { useEffect, useState } from 'react';
-import { faker } from '@faker-js/faker';
 import Header from './components/Header';
 import Main from './components/Main';
 import Archive from './components/Archive';
 import Footer from './components/Footer';
-
+import { createRandomPost } from './helpers/helpers';
 export interface Post {
   title: string;
   body: string;
-}
-
-function createRandomPost() {
-  return {
-    title: `${faker.hacker.adjective()} ${faker.hacker.noun()}`,
-    body: faker.hacker.phrase(),
-  };
 }
 
 function App() {
