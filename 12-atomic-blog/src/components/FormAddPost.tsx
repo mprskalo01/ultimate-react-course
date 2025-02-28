@@ -1,12 +1,10 @@
 import { useState } from 'react';
-import { Post } from '../App';
-interface Props {
-  onAddPost: (post: Post) => void;
-}
-function FormAddPost({ onAddPost }: Props) {
+import { usePostContext } from '../context/PostContext';
+
+function FormAddPost() {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
-
+  const { onAddPost } = usePostContext();
   const handleSubmit = function (e: React.SyntheticEvent) {
     e.preventDefault();
     if (!body || !title) return;

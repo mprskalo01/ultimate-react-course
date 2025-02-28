@@ -1,14 +1,9 @@
-import { Post } from '../App';
 import List from './List';
 
-interface Props {
-  posts: Post[];
-}
-
-function Posts({ posts }: Props) {
+function Posts() {
   return (
     <section>
-      <List posts={posts} />
+      <List />
     </section>
   );
 }

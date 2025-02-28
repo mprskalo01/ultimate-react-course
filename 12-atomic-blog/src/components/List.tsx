@@ -1,9 +1,7 @@
-import { Post } from '../App';
+import { usePostContext } from '../context/PostContext';
 
-interface Props {
-  posts: Post[];
-}
-function List({ posts }: Props) {
+function List() {
+  const { posts } = usePostContext();
   return (
     <ul>
       {posts.map((post, i) => (

@@ -1,10 +1,7 @@
-import { Post } from '../App';
+import { usePostContext } from '../context/PostContext';
 
-interface Props {
-  posts: Post[];
-}
-
-function Results({ posts }: Props) {
+function Results() {
+  const { posts } = usePostContext();
   return <p>🚀 {posts.length} atomic posts found</p>;
 }
 
